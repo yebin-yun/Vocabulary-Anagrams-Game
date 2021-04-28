@@ -7,7 +7,7 @@ from flask import request
 import logging
 
 # Our modules
-import src.config
+import src.config as config
 
 
 ###
