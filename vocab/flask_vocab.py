@@ -13,6 +13,10 @@ from src.vocab import Vocab
 from src.jumble import jumbled
 import src.config as config
 
+logging.basicConfig(format='%(levelname)s:%(message)s',
+                    level=logging.INFO)
+
+log = logging.getLogger(__name__)
 
 ###
 # Globals
@@ -30,7 +34,6 @@ app.secret_key = CONFIG.SECRET_KEY  # Should allow using session variables
 # neither of which would be suitable for responding keystroke by keystroke.
 
 WORDS = Vocab(CONFIG.VOCAB)
-
 
 ###
 # Pages
@@ -53,16 +56,6 @@ def index():
     return flask.render_template('vocab.html')
 
 
-@app.route("/keep_going")
-def keep_going():
-    """
-    After initial use of index, we keep the same scrambled
-    word and try to get more matches
-    """
-    flask.g.vocab = WORDS.as_list()
-    return flask.render_template('vocab.html')
-
-
 @app.route("/success")
 def success():
     return flask.render_template('success.html')
@@ -74,7 +67,7 @@ def success():
 #   a JSON request handler
 #######################
 
-@app.route("/_check", methods=["POST"])
+@app.route("/_check")
 def check():
     """
     User has submitted the form with a word ('attempt')
@@ -83,17 +76,18 @@ def check():
     the word is on the vocab list (therefore correctly spelled),
     made only from the jumble letters, and not a word they
     already found.
-    """
+    """    
     app.logger.debug("Entering check")
 
     # The data we need, from form and from cookie
-    text = flask.request.form["attempt"]
+    text = flask.request.args.get("text", type=str)
     jumble = flask.session["jumble"]
     matches = flask.session.get("matches", [])  # Default to empty list
 
     # Is it good?
     in_jumble = LetterBag(jumble).contains(text)
     matched = WORDS.has(text)
+    log.info(f"text: {text}, in_jumble: {in_jumble}, matched: {matched}")
 
     # Respond appropriately
     if matched and in_jumble and not (text in matches):
@@ -110,12 +104,11 @@ def check():
     else:
         app.logger.debug("This case shouldn't happen!")
         assert False  # Raises AssertionError
-
-    # Choose page:  Solved enough, or keep going?
-    if len(matches) >= flask.session["target_count"]:
-       return flask.redirect(flask.url_for("success"))
-    else:
-       return flask.redirect(flask.url_for("keep_going"))
+        
+    messages = flask.get_flashed_messages()    
+    num_matches = len(matches)
+    rslt = {"all_found": num_matches >= flask.session["target_count"], "messages": messages, "matches": matches}
+    return flask.jsonify(result=rslt)
 
 
 ###############
