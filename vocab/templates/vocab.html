@@ -73,7 +73,7 @@
          <br />
          <div class="row">
             <div class="col-xs-6 text-center">
-               <form id="entry" method="POST" action="/_check">
+               <form id="entry">
                   <label for="attempt">Word:</label>
                   <input id="attempt" name="attempt" type="text" width="15"
                      autocomplete="off"  autofocus />
@@ -120,6 +120,7 @@
                                     for (match in matches) {
                                         $("#results").append(" " + matches[match]);
                                     }
+                                    $("#attempt").val("");
                                 }
                                 if (messages) {
                                     for (message in messages) {
