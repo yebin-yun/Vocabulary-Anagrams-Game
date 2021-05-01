@@ -87,8 +87,7 @@ def check():
     # Is it good?
     in_jumble = LetterBag(jumble).contains(text)
     matched = WORDS.has(text)
-    log.info(f"text: {text}, in_jumble: {in_jumble}, matched: {matched}")
-
+    
     # Respond appropriately
     if matched and in_jumble and not (text in matches):
         # Cool, they found a new word
@@ -105,6 +104,8 @@ def check():
         app.logger.debug("This case shouldn't happen!")
         assert False  # Raises AssertionError
         
+    log.info(f"text: {text}, in_jumble: {in_jumble}, matched: {matched}, matches: {flask.session['matches']}")
+
     messages = flask.get_flashed_messages()    
     num_matches = len(matches)
     rslt = {"all_found": num_matches >= flask.session["target_count"], "messages": messages, "matches": matches}

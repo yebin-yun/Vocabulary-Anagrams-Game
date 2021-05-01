@@ -43,7 +43,7 @@
             -->
          <div class="row">
             {% for word in g.vocab %}
-            <div class="col-xs-2 text-center"> {{ word }} </div>
+            <div class="col-xs-2 text-center word"> {{ word }} </div>
             {% if loop.index is divisibleby 3 %}
          </div>
          <!-- row -->
@@ -82,7 +82,7 @@
          </div>
          <br />
          <p id="results"> </p>
-         <p id="message"> </p>
+         <p class="message"> </p>
          <script>
             // Suppress normal form submission
             $("#entry").submit( function(event) {
@@ -114,19 +114,31 @@
                                $("#attempt").val("");
                                window.location.replace("/success");
                             } else {
-                                $("#message").html("");
+                                $(".message").html("");
                                 if (matches != 0) {
                                     $("#results").html("<h2>You found </h2>");
                                     for (match in matches) {
-                                        $("#results").append(" " + matches[match]);
+                                        // Extra credit #1
+                                        founded_word = matches[match];
+                                        var new_word = '<span style="text-decoration:line-through;text-decoration-color:red;text-decoration-thickness: 0.15em;">' + founded_word + '</span>'
+                                        $(".word").each(function() {
+                                            var text = $(this).text();
+                                            // Need to remove the trailing and leading whitespaces
+                                            if ($.trim(text) == $.trim(founded_word)){
+                                                text = text.replace(founded_word, new_word);
+                                                $(this).html(text);
+                                            }  
+                                        });
+                                        $("#results").append(" " + founded_word);
                                     }
-                                    $("#attempt").val("");
                                 }
-                                if (messages) {
-                                    for (message in messages) {
-                                        $("#message").css("color", "red");
-                                        $("#message").html(messages[message]);
+                                if (messages.length != 0) {
+                                    for (m in messages) {
+                                        $(".message").html(messages[m]);
                                     }
+                                }
+                                else {
+                                    $("#attempt").val("");
                                 }
                             }
                            }
