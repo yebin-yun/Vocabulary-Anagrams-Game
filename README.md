@@ -1,4 +1,7 @@
+
 # UOCIS322 - Project 3 #
+> **Author: Ellie Yun, yyun@uoregon.edu**
+> 
 A vocabulary anagrams game for primary school English Language Learners (ELL).
 
 ## Overview
@@ -9,7 +12,7 @@ The vocabulary word list is fixed for one invocation of the server, so multiple 
 
 ## Getting started
 
-`flask_vocab.py` is an example of the anagram game, with the template `vocab.html`. This example uses a conventional interaction through a form, interacting only when the user submits the form.
+`flask_vocab.py` is an example of the anagram game, with the template `vocab.html`. This example uses an AJAX interaction on each keystroke that the user enters in the text box. You can see the example usage of the AJAX interaction on `flask_minijax.py`.
 
 ### Exploring the container
 You can jump directly into your running container using the following command:
@@ -21,12 +24,6 @@ docker exec -it YOUR_CONTAINER_ID /bin/bash
 This way you can run the tests, run another script, and really experiment with what goes on inside your container.
 
 ## Tasks
-
-* Familiarize yourself with `flask_vocab.py` and `flask_minijax.py` by running them separately. You need to understand them to do this project.
-
-* Your task is to replace the form interaction (in `flask_vocab.py`) with AJAX interaction on each keystroke using `flask_minijax.py`.
-
-* Revise `Dockerfile`.
 
 * As always, submit your `credentials.ini` through Canvas. It should contain your name and git repo URL.
 
@@ -44,27 +41,9 @@ This directory contains a few word lists in the form of text files. You should n
 `flask_minijax.py`, along with its template `templates/minijax.html`, is a tiny example of using JQuery with flask for an AJAX application. They should not be included in the version of the project you turn in. You can use this example to figure out how to implement an AJAX version of the game. Delete the two (along with `static/img`) when you're done with the project.
 
 ### How do I run the tests?
-The `tests` directory contains a test suite for the `src` package. There's a `run_tests.sh`, which you can run in your container while it's running. However, it is not required, since you will not be changing anything in `src`.
-
-## Grading Rubric
-
-* If your code works as expected: 100 points. This includes:
-	* AJAX in the frontend (`vocab.html`)
-	* Logic in the backend (`flask_vocab.py`)
-	* Frontend to backend interaction (with correct requests and responses) between `vocab.html` and `flask_vocab.py`.
-
-* If the JQuery logic is not working, 30 points will be docked off.
-
-* If the html file (replacing the original form interaction, i.e., replacing the button with JQuery code) is wrong or is missing in the appropriate location, 30 points will be docked off.
-
-* If none of the functionalities work, 40 points will be given assuming
-    * the `credentials.ini` is submitted with the correct URL of your repo,
-    * the `Dockerfile` builds without any errors, and
-
-* If the `Dockerfile` doesn't build or is missing, 20 points will be docked off.
-
-* If `credentials.ini` is not submitted or the repo is not found, 0 will be assigned.
+The `tests` directory contains a test suite for the `src` package. There's a `run_tests.sh`, which you can run in your container while it's running. However, it is not required, since you will not be changing anything in `src`. Before you run the tests, make a copy of `credentials-skel.ini` as `credentials.ini` and then update it as you needed. If not, it will use `app.ini` for configuration.
 
 ## Credits
 
 Michal Young, Ram Durairajan, Steven Walton, Joe Istas.
+
