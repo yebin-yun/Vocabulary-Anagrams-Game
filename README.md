@@ -23,11 +23,6 @@ docker exec -it YOUR_CONTAINER_ID /bin/bash
 
 This way you can run the tests, run another script, and really experiment with what goes on inside your container.
 
-## Tasks
-
-* As always, submit your `credentials.ini` through Canvas. It should contain your name and git repo URL.
-
-* As always, revise the README file.
 
 ## FAQ
 ### What is `src`?
