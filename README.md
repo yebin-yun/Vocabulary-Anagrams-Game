@@ -1,10 +1,11 @@
-
-# UOCIS322 - Project 3 #
+# Vocabulary Anagrams Game #
 > **Author: Ellie Yun, yyun@uoregon.edu**
 > 
 A vocabulary anagrams game for primary school English Language Learners (ELL).
 
 ## Overview
+
+![before login](images/main.png)
 
 A simple anagram game designed for English-language learning students in elementary and middle school. Students are presented with a list of vocabulary words (taken from a text file) and an anagram. The anagram is a jumble of some number of vocabulary words, randomly chosen. Students attempt to type words that can be created from the jumble. When a matching word is typed, it is added to a list of solved words.
 
@@ -12,7 +13,17 @@ The vocabulary word list is fixed for one invocation of the server, so multiple 
 
 ## Getting started
 
-`flask_vocab.py` is an example of the anagram game, with the template `vocab.html`. This example uses an AJAX interaction on each keystroke that the user enters in the text box. You can see the example usage of the AJAX interaction on `flask_minijax.py`.
+`flask_vocab.py` is an example of the anagram game, with the template `vocab.html`. This example uses an AJAX interaction on each keystroke that the user enters in the text box. 
+
+- Go to the ```vocab``` directory in the repository. 
+
+- Build the simple flask app image using
+
+      docker build -t <image name> .
+      
+- Run the container using
+     
+      docker run -d -p <host>:<port> <image name>
 
 ### Exploring the container
 You can jump directly into your running container using the following command:
@@ -31,14 +42,10 @@ This is a sub-package which contains modules related to the game. You should not
 ### What is `data`?
 This directory contains a few word lists in the form of text files. You should not make any changes to the ones that already exist. However, you can add your own (but don't have to). You can change the word list file in your `credentials.ini`.
 
-### What is minijax?
-
-`flask_minijax.py`, along with its template `templates/minijax.html`, is a tiny example of using JQuery with flask for an AJAX application. They should not be included in the version of the project you turn in. You can use this example to figure out how to implement an AJAX version of the game. Delete the two (along with `static/img`) when you're done with the project.
-
 ### How do I run the tests?
 The `tests` directory contains a test suite for the `src` package. There's a `run_tests.sh`, which you can run in your container while it's running. However, it is not required, since you will not be changing anything in `src`. Before you run the tests, make a copy of `credentials-skel.ini` as `credentials.ini` and then update it as you needed. If not, it will use `app.ini` for configuration.
 
 ## Credits
 
-Michal Young, Ram Durairajan, Steven Walton, Joe Istas.
+Michal Young, Ram Durairajan, Steven Walton, Joe Istas, Ali Hassani.
 
